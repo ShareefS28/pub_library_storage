@@ -1,0 +1,216 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Generate Cookie session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Generate Cookie",
+                "parameters": [
+                    {
+                        "description": "Login credentials",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtologin.DTOLoginAccountReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "description": "Create Account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Create Account",
+                "parameters": [
+                    {
+                        "description": "Register Account",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtoregister.DTORegisterAccountReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "Check if server is running",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Health check",
+                "responses": {}
+            }
+        },
+        "/secure/auth/logout": {
+            "delete": {
+                "description": "Destroy Cookie session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Destroy Cookie",
+                "responses": {}
+            }
+        },
+        "/secure/auth/refreshSession": {
+            "post": {
+                "description": "Refresh Cookie session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh Cookie",
+                "responses": {}
+            }
+        },
+        "/secure/book/create": {
+            "post": {
+                "description": "Example:\nnames=Book A\nnames=Book B\nfiles=@file1.pdf\nfiles=@file2.pdf",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Create Book",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Book names",
+                        "name": "names",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "file"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Book files",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/secure/health": {
+            "get": {
+                "description": "Check if server is running",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Health check",
+                "responses": {}
+            }
+        },
+        "/secure/me": {
+            "get": {
+                "description": "Get Profile or Check Sessions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get Profile",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "dtologin.DTOLoginAccountReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtoregister.DTORegisterAccountReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

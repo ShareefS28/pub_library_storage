@@ -1,0 +1,94 @@
+TABLE mt_accounts {
+  created_at DATETIMETO2(7) [not null, default: 'SYSUTCDATETIME()']
+  created_by UNIQUEIDENTIFIER [not null]
+
+  updated_at DATETIMETO2(7) [not null]
+  updated_by UNIQUEIDENTIFIER [null]
+  is_updated BIT [not null, default: 'false']
+  
+  deleted_at DATETIMETO2(7) [null]
+  deleted_by UNIQUEIDENTIFIER [null]
+  is_deleted BIT [not null, default: 'false']
+  
+  id INT [pk, increment]
+  uuid UNIQUEIDENTIFIER [not null]
+  
+  username VARCHAR(255) [not null]
+  password_hash VARCHAR(512) [not null]
+}
+
+TABLE mt_sessions {
+  created_at DATETIMETO2(7) [not null, default: 'SYSUTCDATETIME()']
+  created_by UNIQUEIDENTIFIER [not null]
+  
+  updated_at DATETIMETO2(7) [not null]
+  updated_by UNIQUEIDENTIFIER [null]
+  is_updated BIT [not null, default: 'false']
+  
+  deleted_at DATETIMETO2(7) [null]
+  deleted_by UNIQUEIDENTIFIER [null]
+  is_deleted BIT [not null, default: 'false']
+
+  id INT [pk, increment]
+  uuid UNIQUEIDENTIFIER [not null]
+  mt_account_id INT  [not null, ref: > mt_accounts.id]
+  ip_address VARCHAR(45) [null]
+  user_agent VARCHAR(512) [null]
+  expired_at DATETIMETO2(7) [not null]
+  revoked_at DATETIMETO2(7) [null] 
+}
+
+// TABLE mt_shelves {
+//   created_at DATETIMETO2(7) [not null, default: 'SYSUTCDATETIME()']
+//   created_by INT [not null]
+  
+//   updated_at DATETIMETO2(7) [not null]
+//   updated_by INT [not null]
+//   is_updated BIT [not null, default: 'false']
+  
+//   deleted_at DATETIMETO2(7) [null]
+//   deleted_by INT [null]
+//   is_deleted BIT [not null, default: 'false']
+  
+//   id INT [pk, increment]
+//   name NVARCHAR(255) [not null]
+// }
+
+TABLE mt_books {
+  created_at DATETIMETO2(7) [not null, default: 'SYSUTCDATETIME()']
+  created_by INT [not null]
+  
+  updated_at DATETIMETO2(7) [not null]
+  updated_by INT [not null]
+  is_updated BIT [not null, default: 'false']
+  
+  deleted_at DATETIMETO2(7) [null]
+  deleted_by INT [null]
+  is_deleted BIT [not null, default: 'false']
+  
+  id INT [pk, increment]
+  mt_account_id INT [ref: > mt_accounts.id]
+  
+  name NVARCHAR(255) [not null]
+}
+
+TABLE mt_file_storage {
+  created_at DATETIMETO2(7) [not null, default: 'SYSUTCDATETIME()']
+  created_by INT [not null]
+  
+  updated_at DATETIMETO2(7) [not null]
+  updated_by INT [not null]
+  is_updated BIT [not null, default: 'false']
+  
+  deleted_at DATETIMETO2(7) [null]
+  deleted_by INT [null]
+  is_deleted BIT [not null, default: 'false']
+  
+  id INT [pk, increment]
+  mt_book_id INT [not null, ref: - mt_books.id]
+  
+  file_name NVARCHAR(255) [not null]
+  file_path NVARCHAR(255) [not null]
+  file_size BIGINT [not null]
+  mime_type NVARCHAR(255) [not null]
+}

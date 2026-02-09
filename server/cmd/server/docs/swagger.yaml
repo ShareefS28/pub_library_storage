@@ -1,0 +1,151 @@
+definitions:
+  dtologin.DTOLoginAccountReq:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dtoregister.DTORegisterAccountReq:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Generate Cookie session
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dtologin.DTOLoginAccountReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Generate Cookie
+      tags:
+      - Authentication
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Create Account
+      parameters:
+      - description: Register Account
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dtoregister.DTORegisterAccountReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create Account
+      tags:
+      - Authentication
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Check if server is running
+      produces:
+      - application/json
+      responses: {}
+      summary: Health check
+      tags:
+      - Health
+  /secure/auth/logout:
+    delete:
+      consumes:
+      - application/json
+      description: Destroy Cookie session
+      produces:
+      - application/json
+      responses: {}
+      summary: Destroy Cookie
+      tags:
+      - Authentication
+  /secure/auth/refreshSession:
+    post:
+      consumes:
+      - application/json
+      description: Refresh Cookie session
+      produces:
+      - application/json
+      responses: {}
+      summary: Refresh Cookie
+      tags:
+      - Authentication
+  /secure/book/create:
+    post:
+      consumes:
+      - multipart/form-data
+      description: |-
+        Example:
+        names=Book A
+        names=Book B
+        files=@file1.pdf
+        files=@file2.pdf
+      parameters:
+      - collectionFormat: multi
+        description: Book names
+        in: formData
+        items:
+          type: string
+        name: names
+        required: true
+        type: array
+      - collectionFormat: multi
+        description: Book files
+        in: formData
+        items:
+          type: file
+        name: files
+        required: true
+        type: array
+      produces:
+      - multipart/form-data
+      responses: {}
+      summary: Create Book
+      tags:
+      - Book
+  /secure/health:
+    get:
+      consumes:
+      - application/json
+      description: Check if server is running
+      produces:
+      - application/json
+      responses: {}
+      summary: Health check
+      tags:
+      - Health
+  /secure/me:
+    get:
+      consumes:
+      - application/json
+      description: Get Profile or Check Sessions
+      produces:
+      - application/json
+      responses: {}
+      summary: Get Profile
+      tags:
+      - Profile
+swagger: "2.0"
